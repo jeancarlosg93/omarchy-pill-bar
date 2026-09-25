@@ -24,6 +24,7 @@ Item {
   // OS-level fontconfig monospace binding — it is not stored in shell.json.
   property var barConfig: ({})
   readonly property bool pillsEnabled: !barConfig || barConfig.pills !== false
+  readonly property bool pillChrome: pillsEnabled && transparent
   // Injected by the host shell. Used for shell-wide actions such as opening
   // settings and persisting inline widget state.
   property var shell: null
@@ -76,8 +77,8 @@ Item {
   property color themeContrastForeground: Color.background
   property color transparentForeground: Color.bar.text
   property color pillForeground: readableOn(Color.background, themeForeground)
-  property color foreground: pillsEnabled ? pillForeground : themeForeground
-  property color barForeground: pillsEnabled ? pillForeground : (useTransparentForeground ? transparentForeground : themeForeground)
+  property color foreground: pillChrome ? pillForeground : themeForeground
+  property color barForeground: pillChrome ? pillForeground : (useTransparentForeground ? transparentForeground : themeForeground)
   property bool foregroundAnimationEnabled: true
   property color background: Color.bar.background
   property color urgent: Color.bar.active
@@ -575,7 +576,7 @@ Item {
   }
 
   readonly property bool vertical: position === "left" || position === "right"
-  readonly property int barSize: vertical ? Style.bar.sizeVertical : Style.bar.sizeHorizontal + (pillsEnabled ? Style.space(4) : 0)
+  readonly property int barSize: vertical ? Style.bar.sizeVertical : Style.bar.sizeHorizontal + (pillChrome ? Style.space(4) : 0)
 
   function normalizePosition(value) {
     return BarModel.normalizePosition(value)
@@ -1279,7 +1280,7 @@ Item {
     }
 
     margins {
-      top: root.barHidden && root.position === "top" ? -root.barSize : (root.pillsEnabled && root.position === "top" ? Style.space(3) : 0)
+      top: root.barHidden && root.position === "top" ? -root.barSize : (root.pillChrome && root.position === "top" ? Style.space(3) : 0)
       bottom: root.barHidden && root.position === "bottom" ? -root.barSize : 0
       left: root.barHidden && root.position === "left" ? -root.barSize : 0
       right: root.barHidden && root.position === "right" ? -root.barSize : 0
@@ -1835,8 +1836,8 @@ Item {
     readonly property bool hovered: moduleHover.hovered
     readonly property bool dragSource: root.barDragSource === slot
     readonly property bool panelOpen: root.activePopout === slot.activeItem
-    readonly property int pillGap: root.pillsEnabled ? Style.space(3) : 0
-    readonly property int pillPadding: root.pillsEnabled ? Style.space(5) : 0
+    readonly property int pillGap: root.pillChrome ? Style.space(3) : 0
+    readonly property int pillPadding: root.pillChrome ? Style.space(5) : 0
     readonly property bool hasContent: activeItem && activeItem.visible && activeItem.implicitWidth > 0 && activeItem.implicitHeight > 0
     // Modules bigger than the mark they want (a text label in a padded slot,
     // a multi-line stack on a vertical bar) can say how long the open-panel
@@ -1863,7 +1864,7 @@ Item {
     HoverHandler { id: moduleHover }
 
     Rectangle {
-      visible: root.pillsEnabled && slot.hasContent
+      visible: root.pillChrome && slot.hasContent
       x: root.vertical ? Style.space(2) : slot.pillGap
       y: root.vertical ? slot.pillGap : Style.space(2)
       width: Math.max(0, parent.width - (root.vertical ? Style.space(4) : slot.pillGap * 2))

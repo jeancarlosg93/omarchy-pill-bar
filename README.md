@@ -11,7 +11,7 @@ omarchy restart shell
 
 No requiere los plugins de reloj ni de espacios de trabajo: puede usarse con los widgets originales de Omarchy o con los personalizados.
 
-Las píldoras se muestran por defecto. Haz doble clic derecho en una zona vacía del centro de la barra para alternarlas. La elección se guarda como `bar.pills` en `~/.config/omarchy/shell.json`. El doble clic izquierdo en esa zona sigue alternando la transparencia.
+Las píldoras se muestran por defecto cuando la barra es transparente. Al desactivar la transparencia, la barra se extiende hasta el borde de la pantalla y oculta los contornos redondeados. Haz doble clic derecho en una zona vacía del centro para alternar las píldoras; la elección se guarda como `bar.pills` en `~/.config/omarchy/shell.json`. El doble clic izquierdo en esa zona alterna la transparencia.
 
 Para volver a la barra original sin desinstalar este plugin:
 
