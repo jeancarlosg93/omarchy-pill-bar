@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "jeanc.bar",
+  "name": "Pill Bar",
+  "version": "1.0.0",
+  "author": "Jean Carlos",
+  "description": "Theme-aware, toggleable pill styling for the Omarchy status bar",
+  "kinds": [
+    "bar"
+  ],
+  "entryPoints": {
+    "bar": "Bar.qml"
+  },
+  "omarchy": {
+    "clonedFrom": "omarchy.bar"
+  }
+}
